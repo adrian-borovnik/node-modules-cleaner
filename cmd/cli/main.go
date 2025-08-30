@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	cleaner "github.com/adrian-borovnik/node-modules-cleaner/internal"
 )
@@ -18,11 +19,31 @@ func main() {
 
 	fmt.Println("Searching for node_modules in the", workingDir)
 	nodeModules := c.Search()
+	count := len(nodeModules)
+	fmt.Println()
 
-	for _, path := range nodeModules {
-		fmt.Printf(" %s\n", path)
+	if count == 0 {
+		fmt.Println("No node_modules found")
+		return
 	}
 
-	fmt.Println("Cleaning node_modules...")
-	c.Clean()
+	for _, path := range nodeModules {
+		fmt.Println(path)
+	}
+	fmt.Printf("Found %d node_modules\n\n", count)
+
+	var answer string
+	fmt.Printf("Do you want to clean all %d node_modules? (y/n): ", count)
+	fmt.Scanln(&answer)
+	answer = strings.ToLower(strings.TrimSpace(answer))
+
+	switch answer {
+	case "y", "yes":
+		c.Clean()
+		fmt.Println("Cleanup complete")
+	case "n", "no":
+		fmt.Println("Skipping cleanup")
+	default:
+		fmt.Println("Invalid input")
+	}
 }
