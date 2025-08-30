@@ -2,7 +2,6 @@ package cleaner
 
 import (
 	"fmt"
-	"log"
 	"os"
 
 	queue "github.com/adrian-borovnik/node-modules-cleaner/pkg"
@@ -28,7 +27,8 @@ func (c *Cleaner) Search() []string {
 	for curr, err := q.Dequeue(); err == nil; curr, err = q.Dequeue() {
 		c, err := os.ReadDir(curr)
 		if err != nil {
-			log.Fatal("Failed to read directory")
+			// fmt.Println("Failed to read directory:", err)
+			continue
 		}
 
 		for _, entity := range c {

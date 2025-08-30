@@ -20,10 +20,18 @@
 #
 #
 
-.PHONY: run build
+.PHONY: run build exec install
+
+ARGS ?=
 
 run:
-	go run cmd/node-modules-cleanner/main.go
+	go run cmd/node-modules-cleanner/main.go $(ARGS)
 
 build:
-	go build -o bin/node-modules-cleanner cmd/node-modules-cleanner/main.go
+	go build -o bin/nmclean cmd/node-modules-cleanner/main.go
+
+exec: build
+	./bin/nmclean $(ARGS)
+
+install: build
+	sudo mv bin/nmclean /usr/local/bin/nmclean
