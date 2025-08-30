@@ -1,4 +1,4 @@
-# Node Modules Cleanner
+# Node Modules Cleaner
 
 A simple and efficient command-line tool written in Go to find and delete `node_modules` directories within a specified path.
 
